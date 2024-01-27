@@ -6,7 +6,7 @@
 #    By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/27 13:27:47 by arigonza          #+#    #+#              #
-#    Updated: 2024/01/27 17:06:55 by arigonza         ###   ########.fr        #
+#    Updated: 2024/01/27 17:46:16 by arigonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,12 +38,12 @@ $(OBJDIR) :
 	@mkdir -p $(OBJDIR)
 
 clean :
-	@echo "Deleting all object files.."
+	@echo "$(YELLOW)Deleting all object files..$(DEF_COLOR)"
 	@rm -rf $(OBJDIR)
 	@echo "$(RED)All object files deleted.$(DEF_COLOR)"
 
 fclean : clean
-	@echo "Deleting executable files.."
+	@echo "$(YELLOW)Deleting executable files..$(DEF_COLOR)"
 	@rm -rf $(NAME)
 	@echo "$(RED)Executables deleted.$(DEF_COLOR)"
 
