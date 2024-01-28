@@ -6,7 +6,7 @@
 #    By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/27 13:27:47 by arigonza          #+#    #+#              #
-#    Updated: 2024/01/27 17:46:16 by arigonza         ###   ########.fr        #
+#    Updated: 2024/01/28 17:46:52 by arigonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LIBFT = lib/libft/libft.a
 
 OBJDIR := obj
 
-SRC = src/main.c src/parse.c src/utils.c \
+SRC = src/main.c src/parse.c src/utils.c  src/structs.c\
 
 OBJ = $(patsubst src/%.c, $(OBJDIR)/%.o, $(SRC))
 

@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 15:25:18 by arigonza          #+#    #+#             */
-/*   Updated: 2024/01/27 17:51:23 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/01/28 18:06:59 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,20 @@ int	ft_check_argv(int argc, char **argv)
 	}
 	else
 		return (ft_error(INVALID_N_ARGV), 0);
+}
+
+void	ft_parse(char **argv, t_table *table)
+{
+	int	n_philos;
+	long	t_die;
+	long	t_eat;
+	long	t_sleep;
+	
+	n_philos = atoi(argv[1]);
+	t_die = (long)atoi(argv[2]);
+	t_eat = (long)atoi(argv[3]);
+	t_sleep = (long)atoi(argv[4]);
+	table->n_philosophers = n_philos;
+	table->philosophers = ft_init_philos(n_philos, t_die, t_eat, t_sleep);
+	table->forks = ft_init_forks(n_philos);
 }
