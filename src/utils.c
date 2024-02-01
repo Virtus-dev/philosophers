@@ -3,21 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
+/*   By: arigonza <arigonza@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:01:40 by arigonza          #+#    #+#             */
-/*   Updated: 2024/01/28 18:35:36 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/02/01 13:26:20 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-int	ft_error(char *error)
+void	ft_error(char *error)
 {
 	printf("%sError : %s%s\n", FRED, error, DEF_COLOR);
-	return (-1);
 }
-long	get_current_time(struct timeval *start, struct timeval *end)
+
+long long	get_sys_time(void)
 {
-	return ((end->tv_usec - start->tv_usec ) + 1e-6 * (end->tv_usec - start->tv_usec));
+	struct timeval	tv;
+	
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+}
+
+long long	get_current_time(t_table *table)
+{
+	return (get_sys_time() - table->started);
+}
+
+void	ft_free_mutex(t_table  *table)
+{
+	int	i;
+	
+	i = 0;
+	while (i < table->n_philosophers)
+		pthread_mutex_destroy(&table->forks[i++]);
 }

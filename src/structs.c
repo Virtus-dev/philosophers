@@ -3,89 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   structs.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
+/*   By: arigonza <arigonza@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 16:36:54 by arigonza          #+#    #+#             */
-/*   Updated: 2024/01/28 18:30:27 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/02/01 14:54:21 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-t_philosopher	*ft_create_philo(long t_die, long t_eat, long t_sleep, int id)
+t_philosopher	*ft_create_philo(int id)
 {
 	t_philosopher	*philo;
-
-	philo = (t_philosopher *)malloc(sizeof(t_philosopher));
-	philo->time_to_die = t_die;
-	philo->time_to_eat = t_eat;
-	philo->time_to_sleep = t_sleep;
-	philo->n_times_eaten = 0;
+	
+	philo = malloc(sizeof(t_philosopher));
 	philo->id = id;
 	philo->next = NULL;
-	philo->prev = NULL;
 	return (philo);
 }
 
-t_philosopher	*ft_init_philos(int n, long die, long eat, long sleep)
+t_philosopher	**ft_init_philos(int n)
 {
 	int				i;
-	t_philosopher	*head;
-	t_philosopher	*prev;
-	t_philosopher	*current;
+	t_philosopher	**philos;
 
 	i = 1;
-	head = ft_create_philo(die, eat, sleep, i);
-	current = head;
+	philos = (t_philosopher **)malloc(sizeof(t_philosopher *) * n);
+	philos[0] = ft_create_philo(i);
 	while (i <= n)
 	{
-		if (current->next)
-			current->prev = prev;
-		prev = current;
-		current->next = ft_create_philo(die, eat, sleep, (i + 1));
-		current = current->next;
+		philos[i] = ft_create_philo((i + 1));
 		i++;
 	}
-	return (head);
+	return (philos);
 }
 
 t_table	*ft_init_table()
 {
-	t_table	*table;
+	t_table			*table;
+	struct timeval	start;
 
 	table = (t_table *)malloc(sizeof(t_table));
 	table->n_philosophers = 0;
 	table->philosophers = NULL;
 	table->forks = NULL;
+	table->started = gettimeofday(&start, NULL);
 	return (table);
 }
 
-t_fork	*ft_create_fork(void)
+void	ft_init_forks(t_table *table)
 {
-	pthread_mutex_t	lock;
-	t_fork			*fork;
-
-	fork = (t_fork *)malloc(sizeof(fork));
-	pthread_mutex_init(&lock, NULL);
-	fork->lock = lock;
-	fork->next = NULL;
-	return (fork);
-}
-
-t_fork	*ft_init_forks(int n)
-{
-	int		i;
-	t_fork	*current;
-	t_fork	*head;
+	int	i;
 
 	i = 0;
-	head = ft_create_fork();
-	current = head;
-	while (i < n)
+	table->forks = malloc(sizeof(pthread_mutex_t) * table->n_philosophers);
+	if (!table->forks)
+	{	
+		ft_free_mutex(table);
+		ft_error(MALLOC_ERR);
+	}
+	while (i < table->n_philosophers)
 	{
-		current->next = ft_create_fork();
-		current = current->next;
+		if (pthread_mutex_init(&table->forks[i], NULL) != 0) 
+		{
+			ft_free_mutex(table);
+			ft_error(MALLOC_ERR);
+		}
 		i++;
 	}
-	return (head);
+		
 }

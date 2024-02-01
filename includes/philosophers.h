@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
+/*   By: arigonza <arigonza@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 13:58:41 by arigonza          #+#    #+#             */
-/*   Updated: 2024/01/28 18:30:01 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/02/01 14:38:24 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,27 @@
 
 typedef struct s_philosopher
 {
-	long					time_to_eat;
-	long					time_to_sleep;
-	long					time_to_die;
-	int						n_times_eaten;
 	int						id;
-	struct s_philosopher			*next;
-	struct s_philosopher			*prev;
+	pthread_t				thread_id;
+	pthread_mutex_t			*r_fork;
+	pthread_mutex_t			*l_fork;
+	int						times_eaten;
+	struct s_philosopher	*next;
 }			t_philosopher;
 
-typedef struct s_fork
-{
-	pthread_mutex_t	lock;
-	struct s_fork			*next;
-}				t_fork;
 typedef struct s_table
 {
 	int				n_philosophers;
-	t_philosopher	*philosophers;
-	t_fork			*forks;
-
+	long			time_to_eat;
+	long			time_to_sleep;
+	long			time_to_die;
+	long			time_to_think;
+	int				n_times_to_eat;
+	t_philosopher	**philosophers;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	*table_mutex;
+	long long			started;
 }					t_table;
-
-
 
 /**
  * @brief 
@@ -53,7 +51,7 @@ typedef struct s_table
  * 
  * @return -1 as an error.
  */
-int				ft_error(char *error);
+void			ft_error(char *error);
 
 /**
  * @brief 
@@ -66,42 +64,64 @@ int				ft_check_argv(int argc, char **argv);
 /**
  * @brief 
  * Create a new philosopher and initiates his properties.
- * @param t_die Amount of time it takes to die after his last meal.
- * @param t_eat Amount of time philosopher takes to eat.
- * @param t_sleep Amount of time it takes to sleep.
  * @param id ID of the philosopher.
  * @return The philosopher itself.
  */
-t_philosopher	*ft_create_philo(long t_die, long t_eat, long t_sleep, int id);
+t_philosopher	*ft_create_philo(int id);
 
 /**
  * @brief 
  * creates a list of philosophers
  * @param n Number of philosophers to create
- * @param die Amount of time it takes to die after his last meal.
- * @param eat Amount of time philosopher takes to eat.
- * @param sleep Amount of time it takes to sleep.
  * @return A pointer to the head of the list.
  */
-t_philosopher	*ft_init_philos(int n, long die, long eat, long sleep);
+t_philosopher	**ft_init_philos(int n);
 
-t_fork	*ft_create_fork(void);
-
-t_fork	*ft_init_forks(int n);
 
 /**
- * @brief
- * Initialize the struct table.
+ * @brief Creates an array of forks.
+ * 
+ * @param t_table
+ * @return An array of forks.
+ */
+void			ft_init_forks(t_table *table);
+
+/**
+ * @brief 
+ * 
+ * @param t_table*
+*/
+void			ft_free_mutex(t_table *table);
+
+/**
+ * @brief Initialize the struct table.
  * @return The table itself
  */
 t_table			*ft_init_table();
 
 /**
  * @brief 
- * @return Gets the lapse of time passed
- */
-long	get_current_time(struct timeval *start, struct timeval *end);
+ * Retrieves the operating system's time values. To begin with, we
+ * call gettimeofday, which provides us with the count of seconds (tv_sec) and
+ * microseconds (tv_usec) that have transpired since 01/01/1970 – a date selected
+ * for technical considerations. Subsequently, we convert each value to
+ * milliseconds.
+*/
+long long		get_sys_time(void);
 
-void	ft_parse(char **argv, t_table *table);
+/**
+ * @brief Gets the lapse of time passed since the start of the
+ * program.
+ * @return long
+ */
+long long		get_current_time(t_table *table);
+
+/**
+ * @brief Parse de char* into int and longs,
+ *  And fill up the table struct.
+ * @param argv char** to be parsed.
+ * @param table table to fill up. 
+ */
+void			ft_parse(char **argv, t_table *table);
 
 #endif
