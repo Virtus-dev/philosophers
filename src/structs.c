@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arigonza <arigonza@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 16:36:54 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/01 21:08:53 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:23:29 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ t_philosopher	*ft_create_philo(int id)
 	return (philo);
 }
 
-t_philosopher	**ft_init_philos(int n)
+t_philosopher	*ft_init_philos(int n)
 {
 	int				i;
-	t_philosopher	**philos;
+	t_philosopher	philos[n];
 
-	i = 1;
-	philos = (t_philosopher **)malloc(sizeof(t_philosopher *) * n);
-	philos[0] = ft_create_philo(i);
+	i = 0;
+	philos = (t_philosopher *)malloc(sizeof(t_philosopher) * n);
+	//philos[0] = ft_create_philo(i);
 	while (i <= n)
 	{
 		philos[i] = ft_create_philo((i + 1));
@@ -37,28 +37,29 @@ t_philosopher	**ft_init_philos(int n)
 	return (philos);
 }
 
-t_table	*ft_init_table()
+t_table	*ft_init_table(int n_philosophers)
 {
 	t_table			*table;
 	struct timeval	start;
 
 	table = (t_table *)malloc(sizeof(t_table));
 	table->n_philosophers = 0;
-	table->philosophers = NULL;
-	table->forks = NULL;
+	table->philosophers = ft_init_philos(n_philosophers);
+	table->forks = ft_init_forks(n_philosophers);
 	table->started = gettimeofday(&start, NULL);
 	return (table);
 }
 
-void	ft_init_forks(t_table *table)
+pthread_mutex_t	*ft_init_forks(int n)
 {
-	int	i;
+	int				i;
+	pthread_mutex_t	*forks;
 
 	i = 0;
-	table->forks = malloc(sizeof(pthread_mutex_t) * table->n_philosophers);
-	if (!table->forks)
+	forks = malloc(sizeof(pthread_mutex_t) * n);
+	if (!forks)
 	{	
-		ft_free_mutex(table);
+		ft_free_mutex(forks);
 		ft_error(MALLOC_ERR);
 	}
 	while (i < table->n_philosophers)

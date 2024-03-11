@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arigonza <arigonza@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:01:40 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/01 19:07:35 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:26:21 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ long long	get_current_time(t_table *table)
 	return (get_sys_time() - table->started);
 }
 
-void	ft_free_mutex(t_table  *table)
+void	ft_free_mutex(pthread_mutex_t *forks, int n)
 {
 	int	i;
 	
 	i = 0;
-	while (i < table->n_philosophers)
+	while (i < n)
 		pthread_mutex_destroy(&(table->forks[i++]));
 }

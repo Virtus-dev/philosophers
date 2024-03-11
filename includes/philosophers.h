@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arigonza <arigonza@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 13:58:41 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/11 12:08:37 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:29:41 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "constants.h"
 
 // Structs
+
 typedef struct s_philosopher
 {
 	int						id;
@@ -39,7 +40,7 @@ typedef struct s_table
 	long			time_to_die;
 	long			time_to_think;
 	int				n_times_to_eat;
-	t_philosopher	**philosophers;
+	t_philosopher	*philosophers;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*table_mutex;
 	long long			started;
@@ -80,33 +81,34 @@ t_philosopher	*ft_create_philo(int id);
 
 /**
  * @brief 
- * creates a list of philosophers
+ * creates an array of philosophers
  * @param n Number of philosophers to create
- * @return A pointer to the head of the list.
+ * @return The array itself.
  */
-t_philosopher	**ft_init_philos(int n);
+t_philosopher	*ft_init_philos(int n);
 
 
 /**
  * @brief Creates an array of forks.
  * 
- * @param t_table
+ * @param n Number of forks to be created.
  * @return An array of forks.
  */
-void			ft_init_forks(t_table *table);
+pthread_mutex_t			*ft_init_forks(int n);
 
 /**
- * @brief Free's all the mutex on the table.
+ * @brief Free's all the mutex.
  * 
- * @param t_table*
+ * @param forks An array of mutex to be freed.
+ * @param n Number of mutex to be freed.
 */
-void			ft_free_mutex(t_table *table);
+void			ft_free_mutex(pthread_mutex_t *forks, int n);
 
 /**
  * @brief Initialize the struct table.
  * @return The table itself
  */
-t_table			*ft_init_table();
+t_table			*ft_init_table(int n_philosophers, mutex_t *forks);
 
 /**
  * @brief 

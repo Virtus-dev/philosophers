@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: arigonza <arigonza@student.42malaga.com    +#+  +:+       +#+         #
+#    By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/27 13:27:47 by arigonza          #+#    #+#              #
-#    Updated: 2024/03/01 21:01:42 by arigonza         ###   ########.fr        #
+#    Updated: 2024/03/11 15:04:49 by arigonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LIBFT = lib/libft/libft.a
 
 OBJDIR := obj
 
-SRC = src/main.c src/parse.c src/utils.c  src/structs.c src/print.c \
+SRC = src/test.c src/parse.c src/utils.c  src/structs.c src/print.c \
 
 OBJ = $(patsubst src/%.c, $(OBJDIR)/%.o, $(SRC))
 
