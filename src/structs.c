@@ -6,7 +6,7 @@
 /*   By: arigonza <arigonza@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 16:36:54 by arigonza          #+#    #+#             */
-/*   Updated: 2024/02/01 14:54:21 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/01 21:08:53 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ t_philosopher	*ft_create_philo(int id)
 	
 	philo = malloc(sizeof(t_philosopher));
 	philo->id = id;
-	philo->next = NULL;
 	return (philo);
 }
 

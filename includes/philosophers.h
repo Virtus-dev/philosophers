@@ -6,7 +6,7 @@
 /*   By: arigonza <arigonza@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 13:58:41 by arigonza          #+#    #+#             */
-/*   Updated: 2024/02/01 14:38:24 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/11 12:08:37 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <pthread.h>
 # include "constants.h"
 
+// Structs
 typedef struct s_philosopher
 {
 	int						id;
@@ -28,7 +29,6 @@ typedef struct s_philosopher
 	pthread_mutex_t			*r_fork;
 	pthread_mutex_t			*l_fork;
 	int						times_eaten;
-	struct s_philosopher	*next;
 }			t_philosopher;
 
 typedef struct s_table
@@ -45,13 +45,22 @@ typedef struct s_table
 	long long			started;
 }					t_table;
 
+// Structs end
+
 /**
  * @brief 
  * Print on the console the actual error.
- * 
- * @return -1 as an error.
  */
 void			ft_error(char *error);
+
+/**
+ * @brief Prints the message of the state of the philosopher.
+ * 
+ * @param table 
+ * @param philo 
+ * @param state 
+ */
+void    ft_print_msg(t_table *table, t_philosopher *philo, int state);
 
 /**
  * @brief 
@@ -87,7 +96,7 @@ t_philosopher	**ft_init_philos(int n);
 void			ft_init_forks(t_table *table);
 
 /**
- * @brief 
+ * @brief Free's all the mutex on the table.
  * 
  * @param t_table*
 */
