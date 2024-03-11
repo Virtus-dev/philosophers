@@ -6,28 +6,28 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 16:36:54 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/11 15:23:29 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/11 16:01:11 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-t_philosopher	*ft_create_philo(int id)
+t_philosopher	ft_create_philo(int id)
 {
 	t_philosopher	*philo;
 	
-	philo = malloc(sizeof(t_philosopher));
+	philo = (t_philosopher *)malloc(sizeof(t_philosopher));
 	philo->id = id;
-	return (philo);
+	return (*philo);
 }
 
 t_philosopher	*ft_init_philos(int n)
 {
 	int				i;
-	t_philosopher	philos[n];
+	t_philosopher	*philos;
 
 	i = 0;
-	philos = (t_philosopher *)malloc(sizeof(t_philosopher) * n);
+	philos = malloc(sizeof(t_philosopher) * n);
 	//philos[0] = ft_create_philo(i);
 	while (i <= n)
 	{
@@ -59,17 +59,17 @@ pthread_mutex_t	*ft_init_forks(int n)
 	forks = malloc(sizeof(pthread_mutex_t) * n);
 	if (!forks)
 	{	
-		ft_free_mutex(forks);
+		ft_free_mutex(forks, n);
 		ft_error(MALLOC_ERR);
 	}
-	while (i < table->n_philosophers)
+	while (i < n)
 	{
-		if (pthread_mutex_init(&table->forks[i], NULL) != 0) 
+		if (pthread_mutex_init(&forks[i], NULL) != 0) 
 		{
-			ft_free_mutex(table);
+			ft_free_mutex(forks, n);
 			ft_error(MALLOC_ERR);
 		}
 		i++;
 	}
-		
+	return (forks);
 }

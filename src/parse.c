@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arigonza <arigonza@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 15:25:18 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/01 17:05:36 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:49:55 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,5 @@ void	ft_parse(char **argv, t_table *table)
 	table->n_philosophers = n_philos;
 	table->time_to_think = table->time_to_sleep;
 	table->philosophers = ft_init_philos(n_philos);
-	ft_init_forks(table);
+	table->forks = ft_init_forks(n_philos);
 }

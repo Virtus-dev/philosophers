@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 13:58:41 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/11 15:29:41 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:54:59 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int				ft_check_argv(int argc, char **argv);
  * @param id ID of the philosopher.
  * @return The philosopher itself.
  */
-t_philosopher	*ft_create_philo(int id);
+t_philosopher	ft_create_philo(int id);
 
 /**
  * @brief 
@@ -108,7 +108,7 @@ void			ft_free_mutex(pthread_mutex_t *forks, int n);
  * @brief Initialize the struct table.
  * @return The table itself
  */
-t_table			*ft_init_table(int n_philosophers, mutex_t *forks);
+t_table			*ft_init_table(int n_philosophers);
 
 /**
  * @brief 
