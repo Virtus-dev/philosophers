@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
+/*   By: arigonza <arigonza@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:04:32 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/11 16:14:19 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/12 20:23:08 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <pthread.h>
-#include <sys/time.h>
+#include "../includes/philosophers.h"
 
 #define NUM_PHILOSOPHERS 5
 #define MAX_TIME_SEC 3 // Maximum time in seconds for each action
