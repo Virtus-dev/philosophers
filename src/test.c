@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arigonza <arigonza@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:04:32 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/12 20:23:08 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:26:52 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ pthread_mutex_t forks[NUM_PHILOSOPHERS];
 pthread_t philosophers[NUM_PHILOSOPHERS];
 
 void *philosopher(void *arg) {
-    int philosopher_id = *(int *)arg;
+    int philosopher_id = (int)arg;
     int left_fork = philosopher_id;
     int right_fork = (philosopher_id + 1) % NUM_PHILOSOPHERS;
 
@@ -31,8 +31,8 @@ void *philosopher(void *arg) {
         printf("Philosopher %d is thinking.\n", philosopher_id);
         while (1) {
             gettimeofday(&end_time, NULL);
-            double elapsed_time = (end_time.tv_sec - start_time.tv_sec) +
-                                  (end_time.tv_usec - start_time.tv_usec) / 1000000.0;
+            long long elapsed_time = (end_time.tv_sec - start_time.tv_sec) +
+                                  (end_time.tv_usec - start_time.tv_usec) / 1000000;
             if (elapsed_time >= MAX_TIME_SEC) {
                 break;
             }
@@ -65,18 +65,18 @@ void *philosopher(void *arg) {
 }
 
 int main() {
-    srand(time(NULL));
+    //srand(time(NULL));
+
+    int i = 0;
 
     // Initialize mutexes (forks)
-    for (int i = 0; i < NUM_PHILOSOPHERS; i++) {
-        pthread_mutex_init(&forks[i], NULL);
+    while (i < NUM_PHILOSOPHERS) {
+        pthread_mutex_init(&forks[i++], NULL);
     }
-
+    
     // Create philosopher threads
-    int philosopher_ids[NUM_PHILOSOPHERS];
-    for (int i = 0; i < NUM_PHILOSOPHERS; i++) {
-        philosopher_ids[i] = i;
-        pthread_create(&philosophers[i], NULL, philosopher, &philosopher_ids[i]);
+    for (int j = 1; j <= NUM_PHILOSOPHERS; j++) {
+        pthread_create(&philosophers[i], NULL, philosopher, &j);
     }
 
     // Join philosopher threads

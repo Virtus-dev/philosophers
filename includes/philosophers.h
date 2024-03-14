@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 13:58:41 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/11 15:54:59 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/14 19:58:04 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@
 typedef struct s_philosopher
 {
 	int						id;
-	pthread_t				thread_id;
-	pthread_mutex_t			*r_fork;
-	pthread_mutex_t			*l_fork;
+	pthread_t				thread;
+	pthread_mutex_t			eating_mutex;
 	int						times_eaten;
+	long long				last_meal;
 }			t_philosopher;
 
 typedef struct s_table
@@ -57,11 +57,11 @@ void			ft_error(char *error);
 /**
  * @brief Prints the message of the state of the philosopher.
  * 
- * @param table 
- * @param philo 
- * @param state 
+ * @param table The handler.
+ * @param philo The philosopher to print information by.
+ * @param state The actual state (thinking, sleeping, eating...).
  */
-void    ft_print_msg(t_table *table, t_philosopher *philo, int state);
+void    ft_print_msg(t_table *table, t_philosopher philo, int state);
 
 /**
  * @brief 
@@ -83,7 +83,7 @@ t_philosopher	ft_create_philo(int id);
  * @brief 
  * creates an array of philosophers
  * @param n Number of philosophers to create
- * @return The array itself.
+ * @return An array of philosophers.
  */
 t_philosopher	*ft_init_philos(int n);
 
@@ -92,7 +92,7 @@ t_philosopher	*ft_init_philos(int n);
  * @brief Creates an array of forks.
  * 
  * @param n Number of forks to be created.
- * @return An array of forks.
+ * @return An array of forks(pthread_mutex_t).
  */
 pthread_mutex_t			*ft_init_forks(int n);
 
@@ -105,10 +105,11 @@ pthread_mutex_t			*ft_init_forks(int n);
 void			ft_free_mutex(pthread_mutex_t *forks, int n);
 
 /**
- * @brief Initialize the struct table.
- * @return The table itself
+ * @brief Initialize the struct table parsing the arguments passed by.
+ * @param argv The arguments passed by the user.
+ * @return The table itself.
  */
-t_table			*ft_init_table(int n_philosophers);
+t_table			*ft_init_table(char **argv);
 
 /**
  * @brief 
@@ -123,7 +124,7 @@ long long		get_sys_time(void);
 /**
  * @brief Gets the lapse of time passed since the start of the
  * program.
- * @return long
+ * @return long long
  */
 long long		get_current_time(t_table *table);
 
