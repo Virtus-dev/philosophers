@@ -6,49 +6,50 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:20:21 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/14 20:24:31 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:20:04 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-void    ft_right_left_handler(t_table *table, t_philosopher philo)
+void	ft_routine(void *arg)
 {
-	if (philo.id % 2 == 0)
-	{
-		pthread_mutex_lock(&table->forks[philo.id + 1]);
-		ft_print_msg(table, philo, TAKING_FORKS);
-		pthread_mutex_lock(&table->forks[philo.id]);
-		ft_print_msg(table, philo, TAKING_FORKS);
-		
+	t_table		*table;
+	int			i;
 
-	}else
+	i = 0;
+	table = arg;
+	while (ft_dead_check(table))
 	{
-		pthread_mutex_lock(&table->forks[philo.id]);
-		ft_print_msg(table, philo, TAKING_FORKS);
-		pthread_mutex_lock(&table->forks[philo.id + 1]);
-		ft_print_msg(table, philo, TAKING_FORKS);
+		ft_right_left_handler(table, table->philosophers[i]);
+		ft_eat(table, table->philosophers[i].id);
+		ft_sleeping(table, table->philosophers[i].id);
+		ft_thinking(table, table->philosophers[i].id);
 	}
 }
 
-void	ft_eat(t_table *table, int id)
+void	ft_create_threads(t_table *table)
 {
-		ft_print_msg(table, table->philosophers[id], EATING);
-		pthread_mutex_lock(&table->philosophers[id].eating_mutex);
-		table->philosophers[id].last_meal = get_current_time(table);
-		pthread_mutex_unlock(&table->philosophers[id].eating_mutex);
-		
-		pthread_mutex_unlock(&table->forks[table->philosophers[id].id]);
-		pthread_mutex_unlock(&table->forks[table->philosophers[id].id + 1]);
+	int			i;
+	
+	i = 0;
+	table->started = get_current_time(table);
+	while (i < table->n_philosophers)
+	{
+		if (!pthread_create(&table->philosophers[i].thread, NULL, ft_routine, &table))
+			ft_error(THREAD_ERR);
+		i++;
+	}
+	ft_loop(table);
 }
 
-// TODO implement a function to check if someone died while is sleeping.
-void	ft_sleep(t_table *table, t_philosopher philo)
+void	ft_loop(t_table *table)
 {
-	long long	start;
-	
-	start = get_current_time(table);
-	while (get_current_time(table) < (start + table->time_to_sleep))
+	while (1)
+	{
+		if (!ft_dead_check(table))
+			break;
 		usleep(100);
-	return (NULL);
+	}
+	return ;
 }

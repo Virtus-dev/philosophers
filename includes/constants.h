@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   constants.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arigonza <arigonza@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 15:44:41 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/01 17:38:57 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:14:55 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define INVALID_N_ARGV "Invalid number of arguments!"
 # define PARSING_EXPL "Follow the following rules: ./philo num_of_philos time_to_die time_to_eat time_to_sleep"
 # define MALLOC_ERR "Malloc failed."
+# define THREAD_ERR "Error creating thread"
 # define MUTEX_ERR "Mutex error."
 
 // States

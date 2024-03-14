@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 13:58:41 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/14 19:58:04 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/14 20:57:46 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,5 +135,43 @@ long long		get_current_time(t_table *table);
  * @param table table to fill up. 
  */
 void			ft_parse(char **argv, t_table *table);
+
+/**
+ * @brief Checks if every philosopher is still alive.
+ * @return 1 if all of them are alive, 0 in case someone died.
+ */
+int	ft_dead_check(t_table *table);
+
+/**
+ * @brief 
+ * 
+ * @param table 
+ * @param philo 
+ */
+void    ft_right_left_handler(t_table *table, t_philosopher philo);
+
+/**
+ * @brief 
+ * 
+ * @param table 
+ * @param id 
+ */
+void	ft_eat(t_table *table, int id);
+
+/**
+ * @brief 
+ * 
+ * @param table 
+ * @param id 
+ */
+void	ft_sleeping(t_table *table, int id);
+
+/**
+ * @brief 
+ * 
+ * @param table 
+ * @param id 
+ */
+void	ft_thinking(t_table *table, int id);
 
 #endif

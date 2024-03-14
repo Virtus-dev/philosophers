@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 16:36:54 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/14 20:08:23 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/14 21:20:18 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ t_table	*ft_init_table(char **argv)
 	table->time_to_think = (table->time_to_die - (table->time_to_sleep + table->time_to_eat)) / 2;
 	table->forks = ft_init_forks(n_philosophers);
 	table->philosophers = ft_init_philos(n_philosophers);
-	table->started = get_sys_time();
 	return (table);
 }
 
