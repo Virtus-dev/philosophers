@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 13:58:41 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/18 17:39:39 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:39:56 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ void	ft_loop(t_table *table);
  * @brief Checks if every philosopher is still alive.
  * @return 1 if all of them are alive, 0 in case someone died.
  */
-int	ft_dead_check(t_table *table);
+int	ft_dead_check(t_philosopher *philo);
 
 /**
  * @brief 

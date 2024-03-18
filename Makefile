@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: arigonza <arigonza@student.42malaga.com    +#+  +:+       +#+         #
+#    By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/27 13:27:47 by arigonza          #+#    #+#              #
-#    Updated: 2024/03/15 21:14:24 by arigonza         ###   ########.fr        #
+#    Updated: 2024/03/18 18:58:31 by arigonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME := philo
 
 CC := gcc
 
-CFLAGS := -Wall -Werror -Wextra -pthread
+CFLAGS := -Wall -Werror -Wextra -pthread -fsanitize=thread -g3
 
 LIBFT = lib/libft/libft.a
 
