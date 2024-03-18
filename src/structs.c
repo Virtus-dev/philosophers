@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
+/*   By: arigonza <arigonza@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 16:36:54 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/14 21:20:18 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/17 14:03:36 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 t_philosopher	ft_create_philo(int id)
 {
 	t_philosopher	philo;
-
+	
 	philo.id = id;
+	philo.eating_mutex = malloc(sizeof(pthread_mutex_t));
 	philo.times_eaten = 0;
 	return (philo);
 }

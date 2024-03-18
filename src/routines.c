@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   routines.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
+/*   By: arigonza <arigonza@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:20:21 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/14 21:20:04 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/16 20:09:40 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-void	ft_routine(void *arg)
+void	*ft_routine(void *arg)
 {
 	t_table		*table;
 	int			i;
@@ -26,6 +26,7 @@ void	ft_routine(void *arg)
 		ft_sleeping(table, table->philosophers[i].id);
 		ft_thinking(table, table->philosophers[i].id);
 	}
+	return (NULL);
 }
 
 void	ft_create_threads(t_table *table)
@@ -36,7 +37,7 @@ void	ft_create_threads(t_table *table)
 	table->started = get_current_time(table);
 	while (i < table->n_philosophers)
 	{
-		if (!pthread_create(&table->philosophers[i].thread, NULL, ft_routine, &table))
+		if (!pthread_create(&(table->philosophers[i].thread), NULL, ft_routine, &table))
 			ft_error(THREAD_ERR);
 		i++;
 	}

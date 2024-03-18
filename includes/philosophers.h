@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
+/*   By: arigonza <arigonza@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 13:58:41 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/14 20:57:46 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/17 14:04:18 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_philosopher
 {
 	int						id;
 	pthread_t				thread;
-	pthread_mutex_t			eating_mutex;
+	pthread_mutex_t			*eating_mutex;
 	int						times_eaten;
 	long long				last_meal;
 }			t_philosopher;
@@ -135,6 +135,28 @@ long long		get_current_time(t_table *table);
  * @param table table to fill up. 
  */
 void			ft_parse(char **argv, t_table *table);
+
+/**
+ * @brief 
+ * 
+ * @param table 
+ */
+void	ft_create_threads(t_table *table);
+
+/**
+ * @brief 
+ * 
+ * @param arg 
+ * @return void* 
+ */
+void	*ft_routine(void *arg);
+
+/**
+ * @brief 
+ * 
+ * @param table 
+ */
+void	ft_loop(t_table *table);
 
 /**
  * @brief Checks if every philosopher is still alive.
