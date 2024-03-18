@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arigonza <arigonza@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 20:32:40 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/15 21:25:25 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:50:58 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void    ft_right_left_handler(t_table *table, t_philosopher philo)
 void	ft_eat(t_table *table, int id)
 {
 		ft_print_msg(table, table->philosophers[id], EATING);
-		pthread_mutex_lock(&table->philosophers[id].eating_mutex);
+		pthread_mutex_lock(table->philosophers[id].eating_mutex);
 		table->philosophers[id].last_meal = get_current_time(table);
-		pthread_mutex_unlock(&table->philosophers[id].eating_mutex);
+		pthread_mutex_unlock(table->philosophers[id].eating_mutex);
 		
 		pthread_mutex_unlock(&table->forks[table->philosophers[id].id]);
 		pthread_mutex_unlock(&table->forks[table->philosophers[id].id + 1]);

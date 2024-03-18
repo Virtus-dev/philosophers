@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routines.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arigonza <arigonza@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:20:21 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/16 20:09:40 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:41:24 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,20 @@
 
 void	*ft_routine(void *arg)
 {
-	t_table		*table;
-	int			i;
+	t_philosopher	*philo;
 
-	i = 0;
-	table = arg;
-	while (ft_dead_check(table))
+	philo = arg;
+	while (ft_dead_check(philo->table))
 	{
-		ft_right_left_handler(table, table->philosophers[i]);
-		ft_eat(table, table->philosophers[i].id);
-		ft_sleeping(table, table->philosophers[i].id);
-		ft_thinking(table, table->philosophers[i].id);
+		/*ft_right_left_handler(table, table->philosophers[i]); */
+		ft_eat(philo->table, philo->id);
+		ft_sleeping(philo->table, philo->id);
+		ft_thinking(philo->table, philo->id);
 	}
 	return (NULL);
 }
 
-void	ft_create_threads(t_table *table)
+void	ft_create_threads(t_philosopher *philos, t_table *table)
 {
 	int			i;
 	
@@ -37,7 +35,7 @@ void	ft_create_threads(t_table *table)
 	table->started = get_current_time(table);
 	while (i < table->n_philosophers)
 	{
-		if (!pthread_create(&(table->philosophers[i].thread), NULL, ft_routine, &table))
+		if (pthread_create(&philos[i].thread, NULL, ft_routine, &philos[i]))
 			ft_error(THREAD_ERR);
 		i++;
 	}

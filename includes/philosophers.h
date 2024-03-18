@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arigonza <arigonza@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 13:58:41 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/17 14:04:18 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:34:25 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 
 // Structs
 
+typedef struct s_table	t_table;
+
 typedef struct s_philosopher
 {
 	int						id;
@@ -30,6 +32,7 @@ typedef struct s_philosopher
 	pthread_mutex_t			*eating_mutex;
 	int						times_eaten;
 	long long				last_meal;
+	t_table					*table;
 }			t_philosopher;
 
 typedef struct s_table
@@ -77,7 +80,7 @@ int				ft_check_argv(int argc, char **argv);
  * @param id ID of the philosopher.
  * @return The philosopher itself.
  */
-t_philosopher	ft_create_philo(int id);
+t_philosopher	ft_create_philo(int id, t_table *table);
 
 /**
  * @brief 
@@ -85,7 +88,7 @@ t_philosopher	ft_create_philo(int id);
  * @param n Number of philosophers to create
  * @return An array of philosophers.
  */
-t_philosopher	*ft_init_philos(int n);
+t_philosopher	*ft_init_philos(int n, t_table *table);
 
 
 /**
@@ -141,7 +144,7 @@ void			ft_parse(char **argv, t_table *table);
  * 
  * @param table 
  */
-void	ft_create_threads(t_table *table);
+void	ft_create_threads(t_philosopher *philos, t_table *table);
 
 /**
  * @brief 
