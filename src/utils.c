@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:01:40 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/14 20:59:16 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:15:19 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,18 @@ int	ft_dead_check(t_table *table)
 	while (i < table->n_philosophers)
 	{
 		if (table->philosophers[i].last_meal > (currnt + table->time_to_die))
-			return (0);
+			return (printf("Last_meal->%lld, current + time_to_die: %lld\n", table->philosophers[i].last_meal, (currnt + table->time_to_die)), ft_print_msg(table, table->philosophers[i], DIED), 0);
 		i++;
 	}
+	return (1);
+}
+
+int	ft_check(t_philosopher *philo)
+{
+	long long	currnt;
+	
+	currnt = get_current_time(philo->table);
+	if (philo->last_meal > (currnt + philo->table->time_to_die))
+		return (ft_print_msg(philo->table, *philo, DIED), 0);
 	return (1);
 }

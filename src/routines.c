@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:20:21 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/18 16:41:24 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:16:15 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@ void	*ft_routine(void *arg)
 	t_philosopher	*philo;
 
 	philo = arg;
-	while (ft_dead_check(philo->table))
+	philo->last_meal = get_current_time(philo->table);
+	while (ft_check(philo))
 	{
-		/*ft_right_left_handler(table, table->philosophers[i]); */
-		ft_eat(philo->table, philo->id);
-		ft_sleeping(philo->table, philo->id);
-		ft_thinking(philo->table, philo->id);
+		ft_right_left_handler(philo);
+		ft_eat(philo);
+		ft_sleeping(philo);
+		ft_thinking(philo);
 	}
 	return (NULL);
 }
@@ -39,6 +40,7 @@ void	ft_create_threads(t_philosopher *philos, t_table *table)
 			ft_error(THREAD_ERR);
 		i++;
 	}
+	usleep(100);
 	ft_loop(table);
 }
 

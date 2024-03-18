@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 13:58:41 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/18 16:34:25 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/18 17:39:39 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ typedef struct s_table
 }					t_table;
 
 // Structs end
+
+int	ft_check(t_philosopher *philo);
 
 /**
  * @brief 
@@ -173,7 +175,7 @@ int	ft_dead_check(t_table *table);
  * @param table 
  * @param philo 
  */
-void    ft_right_left_handler(t_table *table, t_philosopher philo);
+void    ft_right_left_handler(t_philosopher *philo);
 
 /**
  * @brief 
@@ -181,22 +183,20 @@ void    ft_right_left_handler(t_table *table, t_philosopher philo);
  * @param table 
  * @param id 
  */
-void	ft_eat(t_table *table, int id);
+void	ft_eat(t_philosopher *philo);
 
 /**
  * @brief 
  * 
- * @param table 
- * @param id 
+ * @param philo
  */
-void	ft_sleeping(t_table *table, int id);
+void	ft_sleeping(t_philosopher *philo);
 
 /**
  * @brief 
  * 
- * @param table 
- * @param id 
+ * @param philo
  */
-void	ft_thinking(t_table *table, int id);
+void	ft_thinking(t_philosopher *philo);
 
 #endif

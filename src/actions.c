@@ -6,60 +6,65 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 20:32:40 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/18 15:50:58 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:14:01 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-void    ft_right_left_handler(t_table *table, t_philosopher philo)
+void    ft_right_left_handler(t_philosopher *philo)
 {
-	if (philo.id % 2 == 0)
+	if (philo->id % 2 == 0)
 	{
-		pthread_mutex_lock(&table->forks[philo.id + 1]);
-		ft_print_msg(table, philo, TAKING_FORKS);
-		pthread_mutex_lock(&table->forks[philo.id]);
-		ft_print_msg(table, philo, TAKING_FORKS);
+		pthread_mutex_lock(&philo->table->forks[philo->id + 1]);
+		ft_print_msg(philo->table, *philo, TAKING_FORKS);
+		pthread_mutex_lock(&philo->table->forks[philo->id]);
+		ft_print_msg(philo->table, *philo, TAKING_FORKS);
 		
 
 	}else
 	{
-		pthread_mutex_lock(&table->forks[philo.id]);
-		ft_print_msg(table, philo, TAKING_FORKS);
-		pthread_mutex_lock(&table->forks[philo.id + 1]);
-		ft_print_msg(table, philo, TAKING_FORKS);
+		pthread_mutex_lock(&philo->table->forks[philo->id]);
+		ft_print_msg(philo->table, *philo, TAKING_FORKS);
+		pthread_mutex_lock(&philo->table->forks[philo->id + 1]);
+		ft_print_msg(philo->table, *philo, TAKING_FORKS);
 	}
 }
 
-void	ft_eat(t_table *table, int id)
-{
-		ft_print_msg(table, table->philosophers[id], EATING);
-		pthread_mutex_lock(table->philosophers[id].eating_mutex);
-		table->philosophers[id].last_meal = get_current_time(table);
-		pthread_mutex_unlock(table->philosophers[id].eating_mutex);
-		
-		pthread_mutex_unlock(&table->forks[table->philosophers[id].id]);
-		pthread_mutex_unlock(&table->forks[table->philosophers[id].id + 1]);
-}
-
-// TODO implement a function to check if someone died while is sleeping.
-void	ft_sleeping(t_table *table, int id)
+void	ft_eat(t_philosopher *philo)
 {
 	long long	currnt;
 	
-	ft_print_msg(table, table->philosophers[id], SLEEPING);
-	currnt = get_current_time(table);
-	while (get_current_time(table) < (currnt + table->time_to_sleep))
+	currnt = get_current_time(philo->table);
+	ft_print_msg(philo->table, *philo, EATING);
+	pthread_mutex_lock(philo->eating_mutex);
+	philo->last_meal = get_current_time(philo->table);
+	pthread_mutex_unlock(philo->eating_mutex);
+	
+	while (get_current_time(philo->table) < (currnt + philo->table->time_to_eat))
+		usleep(100);	
+	pthread_mutex_unlock(&philo->table->forks[philo->id]);
+	pthread_mutex_unlock(&philo->table->forks[philo->id + 1]);
+}
+
+// TODO implement a function to check if someone died while is sleeping.
+void	ft_sleeping(t_philosopher *philo)
+{
+	long long	currnt;
+	
+	ft_print_msg(philo->table, *philo, SLEEPING);
+	currnt = get_current_time(philo->table);
+	while (get_current_time(philo->table) < (currnt + philo->table->time_to_sleep))
 		usleep(100);
 	return ;
 }
-void	ft_thinking(t_table *table, int id)
+void	ft_thinking(t_philosopher *philo)
 {
 	long long	currnt;
 
-	ft_print_msg(table, table->philosophers[id], THINKING);
-	currnt = get_current_time(table);
-	while (get_current_time(table) < (currnt + table->time_to_think))
+	ft_print_msg(philo->table, *philo, THINKING);
+	currnt = get_current_time(philo->table);
+	while (get_current_time(philo->table) < (currnt + philo->table->time_to_think))
 		usleep(100);
 	return ;
 }

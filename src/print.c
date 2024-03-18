@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:02:25 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/18 16:05:41 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/18 17:55:23 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,6 @@ void    ft_print_msg(t_table *table, t_philosopher philo, int state)
     }
     if (state == DIED)
     {
-        printf("%s%d died%s\n", FRED, philo.id, DEF_COLOR);
+        printf("%s[%lld] %d died%s\n", FRED, get_current_time(table), philo.id, DEF_COLOR);
     }
 }
