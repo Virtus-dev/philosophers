@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 16:36:54 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/18 16:35:27 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/19 19:19:01 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,16 @@
 t_philosopher	ft_create_philo(int id, t_table *table)
 {
 	t_philosopher	philo;
+	pthread_t		*thread;
 	
+	thread = malloc(sizeof(pthread_t));
 	philo.id = id;
+	philo.thread = *thread;
 	philo.eating_mutex = malloc(sizeof(pthread_mutex_t));
+	if (!philo.eating_mutex)
+		ft_error(MUTEX_ERR);
+	if (pthread_mutex_init(philo.eating_mutex, NULL) != 0)
+		ft_error(MUTEX_ERR);
 	philo.times_eaten = 0;
 	philo.table = table;
 	return (philo);

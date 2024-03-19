@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 13:58:41 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/18 18:39:56 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/19 19:18:49 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef struct s_table
 	int				n_times_to_eat;
 	t_philosopher	*philosophers;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	*table_mutex;
 	long long			started;
 }					t_table;
 
@@ -198,5 +197,19 @@ void	ft_sleeping(t_philosopher *philo);
  * @param philo
  */
 void	ft_thinking(t_philosopher *philo);
+
+/**
+ * @brief 
+ * 
+ * @param table 
+ */
+void	ft_free_all(t_table *table);
+
+/**
+ * @brief 
+ * 
+ * @param philo 
+ */
+void	ft_free_philos(t_philosopher *philo);
 
 #endif
