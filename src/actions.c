@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 20:32:40 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/18 18:14:01 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/19 20:24:00 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	ft_eat(t_philosopher *philo)
 	currnt = get_current_time(philo->table);
 	ft_print_msg(philo->table, *philo, EATING);
 	pthread_mutex_lock(philo->eating_mutex);
+	philo->times_eaten++;
 	philo->last_meal = get_current_time(philo->table);
 	pthread_mutex_unlock(philo->eating_mutex);
-	
 	while (get_current_time(philo->table) < (currnt + philo->table->time_to_eat))
 		usleep(100);	
 	pthread_mutex_unlock(&philo->table->forks[philo->id]);

@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:20:21 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/19 19:07:07 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/03/19 20:52:44 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*ft_routine(void *arg)
 	pthread_mutex_lock(philo->eating_mutex);
 	philo->last_meal = get_current_time(philo->table);
 	pthread_mutex_unlock(philo->eating_mutex);
-	while (ft_check(philo))
+	while (ft_check(*philo))
 	{
 		ft_right_left_handler(philo);
 		ft_eat(philo);
@@ -56,8 +56,11 @@ void	ft_loop(t_table *table)
 		i = 0;
 		while (i < table->n_philosophers)
 		{
-			if (!ft_check(&table->philosophers[i]))
+			if (!ft_check(table->philosophers[i]))
+			{
+				ft_print_msg(table, table->philosophers[i], DIED);
 				return ;
+			}
 			//usleep(25);
 			i++;
 		}
