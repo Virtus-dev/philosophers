@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:01:40 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/19 20:48:50 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/01 18:37:30 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_check(t_philosopher philo)
 	pthread_mutex_lock(philo.eating_mutex);
 	currnt = get_current_time(philo.table) - philo.last_meal;
 	pthread_mutex_unlock(philo.eating_mutex);
-	if (currnt >= philo.table->time_to_die || philo.times_eaten >= philo.table->n_times_to_eat)
+	if (currnt >= philo.table->time_to_die || philo.times_eaten == philo.table->n_times_to_eat)
 		return (0);
 	return (1);
 }

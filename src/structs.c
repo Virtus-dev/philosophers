@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 16:36:54 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/19 20:50:15 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/01 18:39:27 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ t_table	*ft_init_table(char **argv)
 	table->forks = ft_init_forks(n_philosophers);
 	table->philosophers = ft_init_philos(n_philosophers, table);
 	table->print_mutex = malloc(sizeof(pthread_mutex_t));
+	
 	pthread_mutex_init(table->print_mutex, NULL);
 	return (table);
 }

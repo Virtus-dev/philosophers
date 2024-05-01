@@ -6,23 +6,45 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:20:21 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/19 20:52:44 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/01 19:39:09 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
+
+void	*ft_one_philo(void *arg)
+{
+	t_philosopher	*philo;
+
+	philo = (t_philosopher *)arg;
+	if (philo->table->n_times_to_eat == 0)
+		return (NULL);
+	if (philo->table->time_to_die == 0)
+		return (NULL);
+	philo->last_eat = ft_current_time(philo->table);
+	pthread_mutex_lock(&philo->table->forks[0]);
+	ft_print_msg(philo->table, philo, INVALID_INPUT);
+	pthread_mutex_unlock(&philo->table->forks[0]);
+	while ((ft_current_time(philo->table) + philo->last_eat) \
+		< philo->table->time_to_die)
+		usleep(100);
+	ft_print_msg(philo->table, philo, INVALID_INPUT);
+	return (NULL);
+}
 
 void	*ft_routine(void *arg)
 {
 	t_philosopher	*philo;
 
 	philo = arg;
-	pthread_mutex_lock(philo->eating_mutex);
 	philo->last_meal = get_current_time(philo->table);
-	pthread_mutex_unlock(philo->eating_mutex);
+
 	while (ft_check(*philo))
 	{
 		ft_right_left_handler(philo);
+		pthread_mutex_lock(philo->eating_mutex);
+		philo->last_meal = get_current_time(philo->table);
+		pthread_mutex_unlock(philo->eating_mutex);
 		ft_eat(philo);
 		ft_sleeping(philo);
 		ft_thinking(philo);

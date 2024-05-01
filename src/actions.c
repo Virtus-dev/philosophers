@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 20:32:40 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/19 20:24:00 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/01 18:37:13 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ void	ft_sleeping(t_philosopher *philo)
 }
 void	ft_thinking(t_philosopher *philo)
 {
-	long long	currnt;
+	// long long	currnt;
 
 	ft_print_msg(philo->table, *philo, THINKING);
-	currnt = get_current_time(philo->table);
-	while (get_current_time(philo->table) < (currnt + philo->table->time_to_think))
-		usleep(100);
+	// currnt = get_current_time(philo->table);
+	// while (get_current_time(philo->table) < (currnt + philo->table->time_to_think))
+	// 	usleep(100);
 	return ;
 }
