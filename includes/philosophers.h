@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 13:58:41 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/19 20:46:19 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:49:44 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,31 @@ typedef struct s_table
 	t_philosopher	*philosophers;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*print_mutex;
-	long long			started;
+	pthread_mutex_t	*mutex_table;
+	int				finished;
+	long long		started;
+	int				died;
 }					t_table;
 
 // Structs end
 
+int	ft_is_dead(t_philosopher philo);
+
+/**
+ * @brief Checks if someone died.
+ * 
+ * @param philo 
+ * @return int return 0 if the philosopher passed by parameter died 1 if is not.
+ */
 int	ft_check(t_philosopher philo);
+
+/**
+ * @brief check if all philosophers had eaten the total number of times.
+ * 
+ * @param philos
+ * @return int 
+ */
+int	ft_check_n_meals(t_table *table);
 
 /**
  * @brief 
@@ -92,22 +111,21 @@ t_philosopher	ft_create_philo(int id, t_table *table);
  */
 t_philosopher	*ft_init_philos(int n, t_table *table);
 
-
 /**
  * @brief Creates an array of forks.
  * 
  * @param n Number of forks to be created.
  * @return An array of forks(pthread_mutex_t).
  */
-pthread_mutex_t			*ft_init_forks(int n);
+pthread_mutex_t			*ft_init_forks(t_table *table);
 
 /**
  * @brief Free's all the mutex.
  * 
  * @param forks An array of mutex to be freed.
- * @param n Number of mutex to be freed.
+ * 
 */
-void			ft_free_mutex(pthread_mutex_t *forks, int n);
+void			ft_free_mutex(t_table *table);
 
 /**
  * @brief Initialize the struct table parsing the arguments passed by.
@@ -147,6 +165,8 @@ void			ft_parse(char **argv, t_table *table);
  * @param table 
  */
 void	ft_create_threads(t_philosopher *philos, t_table *table);
+
+void	*ft_one_philo(void *arg);
 
 /**
  * @brief 

@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:20:21 by arigonza          #+#    #+#             */
-/*   Updated: 2024/05/01 19:39:09 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/03 20:20:56 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	*ft_one_philo(void *arg)
 		return (NULL);
 	if (philo->table->time_to_die == 0)
 		return (NULL);
-	philo->last_eat = ft_current_time(philo->table);
+	philo->last_meal = get_current_time(philo->table);
 	pthread_mutex_lock(&philo->table->forks[0]);
-	ft_print_msg(philo->table, philo, INVALID_INPUT);
+	ft_print_msg(philo[0].table, philo[0], TAKING_FORKS);
 	pthread_mutex_unlock(&philo->table->forks[0]);
-	while ((ft_current_time(philo->table) + philo->last_eat) \
+	while ((get_current_time(philo->table) + philo->last_meal) \
 		< philo->table->time_to_die)
 		usleep(100);
-	ft_print_msg(philo->table, philo, INVALID_INPUT);
+	ft_print_msg(philo[0].table, philo[0], DIED);
 	return (NULL);
 }
 
@@ -36,18 +36,30 @@ void	*ft_routine(void *arg)
 {
 	t_philosopher	*philo;
 
-	philo = arg;
-	philo->last_meal = get_current_time(philo->table);
-
-	while (ft_check(*philo))
+	philo = (t_philosopher *)arg;
+	if (philo->table->time_to_die == 0)
+		return (NULL);
+	while (get_current_time(philo->table) < 0)
 	{
-		ft_right_left_handler(philo);
 		pthread_mutex_lock(philo->eating_mutex);
 		philo->last_meal = get_current_time(philo->table);
 		pthread_mutex_unlock(philo->eating_mutex);
-		ft_eat(philo);
-		ft_sleeping(philo);
-		ft_thinking(philo);
+		usleep(20);
+	}
+	if (philo->id % 2 == 0)
+		usleep(50);
+	philo->last_meal = get_current_time(philo->table);
+	while (philo->table->died != 1 || ft_check_n_meals(philo->table))
+	{
+		pthread_mutex_lock(philo->eating_mutex);
+		philo->last_meal = get_current_time(philo->table);
+		pthread_mutex_unlock(philo->eating_mutex);
+		if (!ft_check(*philo))
+			ft_eat(philo);
+		if (!ft_check(*philo))
+			ft_sleeping(philo);
+		if (!ft_check(*philo))
+			ft_thinking(philo);
 	}
 	return (NULL);
 }
@@ -55,16 +67,26 @@ void	*ft_routine(void *arg)
 void	ft_create_threads(t_philosopher *philos, t_table *table)
 {
 	int			i;
-	
+	int			n_philos;
+
 	i = 0;
+	n_philos = table->n_philosophers;
 	table->started = get_current_time(table);
-	while (i < table->n_philosophers)
+	if (n_philos == 1)
 	{
-		if (pthread_create(&philos[i].thread, NULL, ft_routine, &philos[i]))
+		if (pthread_create(&philos[i].thread, NULL, ft_one_philo, &philos[i]))
 			ft_error(THREAD_ERR);
-		i++;
 	}
-	usleep(100);
+	else
+	{
+		while (i < n_philos)
+		{
+			if (pthread_create(&philos[i].thread, NULL, ft_routine, &philos[i]))
+				ft_error(THREAD_ERR);
+			i++;
+		}
+	}
+	usleep(200);
 	ft_loop(table);
 	ft_free_all(table);
 }
@@ -78,14 +100,13 @@ void	ft_loop(t_table *table)
 		i = 0;
 		while (i < table->n_philosophers)
 		{
-			if (!ft_check(table->philosophers[i]))
-			{
-				ft_print_msg(table, table->philosophers[i], DIED);
-				return ;
-			}
-			//usleep(25);
+			if (ft_is_dead(table->philosophers[i]))
+				break ;
 			i++;
 		}
+		if (ft_check_n_meals(table))
+			break ;
+		usleep(100);
 	}
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 15:44:41 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/14 21:14:55 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:45:37 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define SLEEPING 3
 # define THINKING 4
 # define DIED 5
+# define EATED_FULL 6
 
 // Colors Start
 # define FRED "\033[0;31m"

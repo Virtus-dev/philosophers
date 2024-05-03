@@ -6,7 +6,7 @@
 #    By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/27 13:27:47 by arigonza          #+#    #+#              #
-#    Updated: 2024/03/19 17:46:11 by arigonza         ###   ########.fr        #
+#    Updated: 2024/05/03 20:23:57 by arigonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,14 +14,16 @@ NAME := philo
 
 CC := gcc
 
-CFLAGS := -Wall -Werror -Wextra -pthread -fsanitize=thread -g3
+CFLAGS := -Wall -Werror -Wextra -pthread
+
+EXTRA := -fsanitize=thread -g3
 
 LIBFT = lib/libft/libft.a
 
 OBJDIR := obj
 
 SRC = src/main.c src/parse.c src/utils.c  src/structs.c src/print.c \
-	src/actions.c src/routines.c
+	src/actions.c src/routines.c src/free.c
 OBJ = $(patsubst src/%.c, $(OBJDIR)/%.o, $(SRC))
 
 $(OBJDIR)/%.o : src/%.c | $(OBJDIR)
@@ -31,7 +33,7 @@ all : $(NAME)
 
 $(NAME) : $(OBJ)
 	@echo "$(YELLOW)Compiling philosophers...$(DEF_COLOR)"
-	@$(CC) $(CFLAGS) -o $@ $^ -I includes/
+	@$(CC) $(CFLAGS)  -o $@ $^ -I includes/
 	@echo "$(GREEN)$(NAME) compiled.$(DEF_COLOR)"
 
 $(OBJDIR) :

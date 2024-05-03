@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 15:25:18 by arigonza          #+#    #+#             */
-/*   Updated: 2024/03/14 16:39:27 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/03 18:11:59 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	ft_check_argv(int argc, char **argv)
 			while (argv[i][j])
 			{
 				if (!(argv[i][j] >= '0' && argv[i][j] <= '9'))
-					return (ft_error(INVALID_INPUT), printf("%s%s%s", FRED, PARSING_EXPL, DEF_COLOR), 0);
+					return (ft_error(INVALID_INPUT),
+						printf("%s%s%s", FRED, PARSING_EXPL, DEF_COLOR), 0);
 				j++;
 			}
 			i++;
