@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:01:40 by arigonza          #+#    #+#             */
-/*   Updated: 2024/05/03 20:20:30 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/03 23:51:14 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,31 @@ int	ft_check(t_philosopher philo)
 	return (0);
 }
 
+int	ft_must_stop(t_table *table)
+{
+	pthread_mutex_lock(table->mutex_table);
+	if (table->finished == table->n_philosophers || table->died == 1)
+	{
+		printf("muerto\n");
+		pthread_mutex_unlock(table->mutex_table);
+		return (1);
+	}
+	else
+	{
+		pthread_mutex_unlock(table->mutex_table);
+		return (0);
+	}
+}
+
 int	ft_is_dead(t_philosopher philo)
 {
 	long long	time;
 
+	printf("EN IS DEAD");
 	pthread_mutex_lock(philo.table->mutex_table);
 	pthread_mutex_lock(philo.eating_mutex);
 	time = (get_current_time(philo.table) - philo.last_meal);
+	printf("TIME IS DEAD: %lld\n", time);
 	pthread_mutex_unlock(philo.eating_mutex);
 	if (time >= philo.table->time_to_die)
 	{
@@ -63,17 +81,40 @@ int	ft_is_dead(t_philosopher philo)
 	}
 }
 
-int	ft_check_n_meals(t_table *table)
+long	ft_atol(char *str)
 {
-	pthread_mutex_lock(table->mutex_table);
-	if (table->finished == table->n_philosophers || table->died == 1)
+	int		i;
+	int		sign;
+	long	nb;
+
+	i = 0;
+	sign = 1;
+	nb = 0;
+	if (str[i] == '-' || str[i] == '+')
 	{
-		pthread_mutex_unlock(table->mutex_table);
-		return (1);
+		if (str[i] == '-')
+			sign *= -1;
+		i++;
 	}
-	else
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		pthread_mutex_unlock(table->mutex_table);
-		return (0);
+		nb = (nb * 10) + (str[i] - '0');
+		i++;
 	}
+	return (nb * sign);
 }
+
+// int	ft_check_n_meals(t_table *table)
+// {
+// 	pthread_mutex_lock(table->mutex_table);
+// 	if (table->finished == table->n_philosophers || table->died == 1)
+// 	{
+// 		pthread_mutex_unlock(table->mutex_table);
+// 		return (1);
+// 	}
+// 	else
+// 	{
+// 		pthread_mutex_unlock(table->mutex_table);
+// 		return (0);
+// 	}
+// }

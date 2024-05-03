@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:20:21 by arigonza          #+#    #+#             */
-/*   Updated: 2024/05/03 20:20:56 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/03 22:52:18 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	*ft_routine(void *arg)
 	philo = (t_philosopher *)arg;
 	if (philo->table->time_to_die == 0)
 		return (NULL);
+	printf("LAST_MEAL = %lld\n", philo->last_meal);
 	while (get_current_time(philo->table) < 0)
 	{
 		pthread_mutex_lock(philo->eating_mutex);
@@ -48,17 +49,16 @@ void	*ft_routine(void *arg)
 	}
 	if (philo->id % 2 == 0)
 		usleep(50);
-	philo->last_meal = get_current_time(philo->table);
-	while (philo->table->died != 1 || ft_check_n_meals(philo->table))
+	while (!ft_must_stop(philo->table))
 	{
 		pthread_mutex_lock(philo->eating_mutex);
 		philo->last_meal = get_current_time(philo->table);
 		pthread_mutex_unlock(philo->eating_mutex);
-		if (!ft_check(*philo))
+		if (!ft_must_stop(philo->table))
 			ft_eat(philo);
-		if (!ft_check(*philo))
+		if (!ft_must_stop(philo->table))
 			ft_sleeping(philo);
-		if (!ft_check(*philo))
+		if (!ft_must_stop(philo->table))
 			ft_thinking(philo);
 	}
 	return (NULL);
@@ -71,7 +71,7 @@ void	ft_create_threads(t_philosopher *philos, t_table *table)
 
 	i = 0;
 	n_philos = table->n_philosophers;
-	table->started = get_current_time(table);
+	table->started = get_sys_time() + table->n_philosophers * 20;
 	if (n_philos == 1)
 	{
 		if (pthread_create(&philos[i].thread, NULL, ft_one_philo, &philos[i]))
@@ -101,11 +101,19 @@ void	ft_loop(t_table *table)
 		while (i < table->n_philosophers)
 		{
 			if (ft_is_dead(table->philosophers[i]))
+			{
+				printf("AaaAAAAAAAA\n");
 				break ;
+			}
 			i++;
 		}
-		if (ft_check_n_meals(table))
-			break ;
+		if (!ft_must_stop(table))
+		{
+			printf("died = %d\n", table->died);
+			printf("BBBBBBBB %d\n", i);
+			// break;
+			return ;
+		}
 		usleep(100);
 	}
 	return ;
