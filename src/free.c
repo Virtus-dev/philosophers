@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
+/*   By: jariza-o <jariza-o@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:05:44 by arigonza          #+#    #+#             */
-/*   Updated: 2024/05/03 20:41:46 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/04 00:29:56 by jariza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,22 @@ void	ft_free_all(t_table *table)
 
 	printf("HACIENDO FREE\n");
 	i = 0;
-	while (i < table->n_philosophers)
+	int u = table->n_philosophers;
+				// while (i < u) {
+				// 	printf("ENTRAAA\n");
+				// 	pthread_mutex_unlock(table->philosophers[i].eating_mutex);
+				// 	i++;
+				// }
+				// i = 0;
+				// while (i < u) {
+				// 	printf("ENTRAAA 2\n");
+				// 	pthread_mutex_unlock(&table->forks[i]);
+				// 	i++;
+				// }
+				// pthread_mutex_unlock(table->print_mutex);
+				// pthread_mutex_unlock(table->mutex_table);
+	i = 0;
+	while (i < u)
 	{
 		printf("QUE HILO ES: %d %d\n", i, table->philosophers[i].id);
 		pthread_join(table->philosophers[i].thread, NULL);
@@ -54,6 +69,7 @@ void	ft_free_all(t_table *table)
 		pthread_mutex_destroy(table->philosophers[i].eating_mutex);
 		free(table->philosophers[i].eating_mutex);
 		i++;
+		u++;
 	}
 	printf("en medio DEL FREE");
 	//ft_free_philos(table->philosophers);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+         #
+#    By: jariza-o <jariza-o@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/27 13:27:47 by arigonza          #+#    #+#              #
-#    Updated: 2024/05/03 20:23:57 by arigonza         ###   ########.fr        #
+#    Updated: 2024/05/04 00:30:38 by jariza-o         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME := philo
 
 CC := gcc
 
-CFLAGS := -Wall -Werror -Wextra -pthread
+CFLAGS := -Wall -Werror -Wextra -pthread -g
 
 EXTRA := -fsanitize=thread -g3
 
@@ -33,7 +33,7 @@ all : $(NAME)
 
 $(NAME) : $(OBJ)
 	@echo "$(YELLOW)Compiling philosophers...$(DEF_COLOR)"
-	@$(CC) $(CFLAGS)  -o $@ $^ -I includes/
+	@$(CC) $(CFLAGS) -o $@ $^ -I includes/
 	@echo "$(GREEN)$(NAME) compiled.$(DEF_COLOR)"
 
 $(OBJDIR) :

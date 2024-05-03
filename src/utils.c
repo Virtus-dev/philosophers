@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
+/*   By: jariza-o <jariza-o@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:01:40 by arigonza          #+#    #+#             */
-/*   Updated: 2024/05/03 20:20:30 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/03 23:18:03 by jariza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,29 @@ long long	get_current_time(t_table *table)
 
 int	ft_check(t_philosopher philo)
 {
-	long long	currnt;
 
-	pthread_mutex_lock(philo.eating_mutex);
-	currnt = get_current_time(philo.table) - philo.last_meal;
-	pthread_mutex_unlock(philo.eating_mutex);
-	if (currnt >= philo.table->time_to_die)
+	pthread_mutex_lock(philo.table->mutex_table);
+	if (philo.table->died == 1 || philo.table->finished == philo.table->n_times_to_eat)
 	{
-		philo.table->died = 1;
-		ft_print_msg(philo.table, philo, DIED);
+		pthread_mutex_unlock(philo.table->mutex_table);
 		return (1);
 	}
-	return (0);
+	else {
+		pthread_mutex_unlock(philo.table->mutex_table);
+		return (0);
+	}
+	// long long	currnt;
+
+	// pthread_mutex_lock(philo.eating_mutex);
+	// currnt = get_current_time(philo.table) - philo.last_meal;
+	// pthread_mutex_unlock(philo.eating_mutex);
+	// if (currnt >= philo.table->time_to_die)
+	// {
+	// 	philo.table->died = 1;
+	// 	ft_print_msg(philo.table, philo, DIED);
+	// 	return (1);
+	// }
+	// return (0);
 }
 
 int	ft_is_dead(t_philosopher philo)

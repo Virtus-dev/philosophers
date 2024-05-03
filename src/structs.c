@@ -3,28 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   structs.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
+/*   By: jariza-o <jariza-o@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 16:36:54 by arigonza          #+#    #+#             */
-/*   Updated: 2024/05/03 20:47:36 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/04 00:12:30 by jariza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-t_philosopher	ft_create_philo(int id, t_table *table)
+void	ft_create_philo(int id, t_table *table, t_philosopher *philo)
 {
-	t_philosopher	philo;
-
-	philo.id = id;
-	philo.eating_mutex = malloc(sizeof(pthread_mutex_t));
-	if (!philo.eating_mutex)
+	philo->id = id;
+	philo->eating_mutex = malloc(sizeof(pthread_mutex_t));
+	if (!philo->eating_mutex)
 		ft_error(MUTEX_ERR);
-	if (pthread_mutex_init(philo.eating_mutex, NULL) != 0)
+	if (pthread_mutex_init(philo->eating_mutex, NULL) != 0)
 		ft_error(MUTEX_ERR);
-	philo.times_eaten = 0;
-	philo.table = table;
-	return (philo);
+	philo->times_eaten = 0;
+	philo->last_meal = 0;
+	philo->table = table;
+	if (philo->id == table->n_philosophers)
+	{
+		philo->l_forks = &table->forks[id - 1];
+		philo->r_forks = &table->forks[0];
+	}
+	else
+	{
+		philo->l_forks = &table->forks[id - 1];
+		philo->r_forks = &table->forks[id];
+	}
 }
 
 t_philosopher	*ft_init_philos(int n, t_table *table)
@@ -33,10 +41,10 @@ t_philosopher	*ft_init_philos(int n, t_table *table)
 	t_philosopher	*philos;
 
 	i = 0;
-	philos = malloc(sizeof(t_philosopher *) * n);
+	philos = (t_philosopher *)malloc(sizeof(t_philosopher) * n);
 	while (i < n)
 	{
-		philos[i] = ft_create_philo((i + 1), table);
+		ft_create_philo((i + 1), table, &philos[i]);
 		i++;
 	}
 	return (philos);

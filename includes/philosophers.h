@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
+/*   By: jariza-o <jariza-o@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 13:58:41 by arigonza          #+#    #+#             */
-/*   Updated: 2024/05/03 20:49:44 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/04 00:06:15 by jariza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ typedef struct s_philosopher
 	int						times_eaten;
 	long long				last_meal;
 	t_table					*table;
+	pthread_mutex_t			*l_forks;
+	pthread_mutex_t			*r_forks;
 }			t_philosopher;
 
 typedef struct s_table
@@ -101,7 +103,7 @@ int				ft_check_argv(int argc, char **argv);
  * @param id ID of the philosopher.
  * @return The philosopher itself.
  */
-t_philosopher	ft_create_philo(int id, t_table *table);
+void	ft_create_philo(int id, t_table *table, t_philosopher *philo);
 
 /**
  * @brief 

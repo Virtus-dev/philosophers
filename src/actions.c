@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
+/*   By: jariza-o <jariza-o@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 20:32:40 by arigonza          #+#    #+#             */
-/*   Updated: 2024/05/03 19:59:53 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/04 00:11:14 by jariza-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,28 @@
 
 void	ft_right_left_handler(t_philosopher *philo)
 {
+	if (ft_check(*philo))
+		return ;
 	if (philo->id % 2 == 0)
 	{
-		pthread_mutex_lock(&philo->table->forks[philo->id + 1]);
+		if (ft_check(*philo))
+			return ;
+		pthread_mutex_lock(philo->r_forks);
 		ft_print_msg(philo->table, *philo, TAKING_FORKS);
 		if (ft_check(*philo))
 			return ;
-		pthread_mutex_lock(&philo->table->forks[philo->id]);
+		pthread_mutex_lock(philo->l_forks);
 		ft_print_msg(philo->table, *philo, TAKING_FORKS);
 	}
 	else
 	{
-		pthread_mutex_lock(&philo->table->forks[philo->id]);
+		if (ft_check(*philo))
+			return ;
+		pthread_mutex_lock(philo->l_forks);
 		ft_print_msg(philo->table, *philo, TAKING_FORKS);
 		if (ft_check(*philo))
 			return ;
-		pthread_mutex_lock(&philo->table->forks[philo->id + 1]);
+		pthread_mutex_lock(philo->r_forks);
 		ft_print_msg(philo->table, *philo, TAKING_FORKS);
 	}
 }
@@ -53,8 +59,8 @@ void	ft_eat(t_philosopher *philo)
 	while (get_current_time(philo->table)
 		< (long long)(currnt + philo->table->time_to_eat))
 		usleep(1);
-	pthread_mutex_unlock(&philo->table->forks[philo->id]);
-	pthread_mutex_unlock(&philo->table->forks[philo->id + 1]);
+	pthread_mutex_unlock(philo->l_forks);
+	pthread_mutex_unlock(philo->r_forks);
 }
 
 // TODO implement a function to check if someone died while is sleeping.
