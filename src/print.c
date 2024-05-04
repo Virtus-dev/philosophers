@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:02:25 by arigonza          #+#    #+#             */
-/*   Updated: 2024/05/03 20:33:14 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/04 11:44:18 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 void	ft_error(char *error)
 {
 	printf("%sError : %s%s\n", FRED, error, DEF_COLOR);
-	return ;
+	exit (1);
 }
 
 void	ft_print_msg(t_table *table, t_philosopher philo, int state)
 {
-	///pthread_mutex_lock(table->print_mutex);
+	//pthread_mutex_lock(table->print_mutex);
 	if (state == TAKING_FORKS && table->died != 1)
 		printf("%s[%lld] %d Has taken a fork%s\n",
 			FBLUE, get_current_time(table), philo.id, DEF_COLOR);

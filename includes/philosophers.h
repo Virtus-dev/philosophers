@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 13:58:41 by arigonza          #+#    #+#             */
-/*   Updated: 2024/05/03 20:49:44 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/04 12:59:08 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ typedef struct s_philosopher
 	pthread_mutex_t			*eating_mutex;
 	int						times_eaten;
 	long long				last_meal;
+	pthread_mutex_t			*r_fork;
+	pthread_mutex_t			*l_fork;
 	t_table					*table;
 }			t_philosopher;
 
@@ -55,6 +57,12 @@ typedef struct s_table
 // Structs end
 
 int	ft_is_dead(t_philosopher philo);
+
+int	ft_must_stop(t_table *table);
+
+long	ft_atol(char *str);
+
+void	print_philos(t_table *table);
 
 /**
  * @brief Checks if someone died.
@@ -109,15 +117,15 @@ t_philosopher	ft_create_philo(int id, t_table *table);
  * @param n Number of philosophers to create
  * @return An array of philosophers.
  */
-t_philosopher	*ft_init_philos(int n, t_table *table);
-
+// t_philosopher	*ft_init_philos(int n, t_table *table);
+void	ft_init_philosophers(t_philosopher *philo, t_table *table);
 /**
  * @brief Creates an array of forks.
  * 
  * @param n Number of forks to be created.
  * @return An array of forks(pthread_mutex_t).
  */
-pthread_mutex_t			*ft_init_forks(t_table *table);
+void		ft_init_forks(t_table *table);
 
 /**
  * @brief Free's all the mutex.
@@ -132,7 +140,7 @@ void			ft_free_mutex(t_table *table);
  * @param argv The arguments passed by the user.
  * @return The table itself.
  */
-t_table			*ft_init_table(char **argv);
+void	ft_init_table(int argc, char **argv, t_table *table);
 
 /**
  * @brief 
@@ -203,21 +211,21 @@ void    ft_right_left_handler(t_philosopher *philo);
  * @param table 
  * @param id 
  */
-void	ft_eat(t_philosopher *philo);
+void	*ft_eat(t_philosopher *philo);
 
 /**
  * @brief 
  * 
  * @param philo
  */
-void	ft_sleeping(t_philosopher *philo);
+void	*ft_sleeping(t_philosopher *philo);
 
 /**
  * @brief 
  * 
  * @param philo
  */
-void	ft_thinking(t_philosopher *philo);
+void	*ft_thinking(t_philosopher *philo);
 
 /**
  * @brief 

@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 15:44:41 by arigonza          #+#    #+#             */
-/*   Updated: 2024/05/02 12:45:37 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/03 23:14:39 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define MALLOC_ERR "Malloc failed."
 # define THREAD_ERR "Error creating thread"
 # define MUTEX_ERR "Mutex error."
+# define EXCED_LIMIT "LIMITE DE PHILOSOFOS EXCEDIDO"
 
 // States
 # define TAKING_FORKS 1
