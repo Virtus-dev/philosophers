@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 18:05:44 by arigonza          #+#    #+#             */
-/*   Updated: 2024/05/04 13:03:29 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/04 15:17:57 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,15 @@ void	ft_free_all(t_table *table)
 	int	i;
 
 	i = 0;
-	printf("FREEE!\n");
+	printf("--------------------------------FREEE!------------------------------------------\n");
 	while (i < table->n_philosophers)
 	{
+		printf("JOINING THREAD %d\n", table->philosophers[i].id);
 		pthread_join(table->philosophers[i].thread, NULL);
+		printf("THREAD %d JOINED\n", table->philosophers[i].id);
+		printf("DESTROYING EATING_MUTEX\n");
 		pthread_mutex_destroy(table->philosophers[i].eating_mutex);
+		printf("EATING_MUTEX DESTROYED\n");
 		free(table->philosophers[i].eating_mutex);
 		i++;
 	}

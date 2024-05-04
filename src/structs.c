@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 16:36:54 by arigonza          #+#    #+#             */
-/*   Updated: 2024/05/04 12:58:30 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/04 13:13:55 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,10 @@ void	ft_init_table(int argc, char **argv, t_table *table)
 	table->philosophers = malloc(sizeof(t_philosopher) * table->n_philosophers);
 	if (!table->philosophers)
 		ft_error(MALLOC_ERR);
+	table->print_mutex = malloc(sizeof(pthread_mutex_t));
+	if (!table->print_mutex)
+		ft_error(MALLOC_ERR);
+	pthread_mutex_init(table->print_mutex, NULL);
 	ft_init_forks(table);
 }
 

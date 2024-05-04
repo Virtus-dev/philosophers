@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:20:21 by arigonza          #+#    #+#             */
-/*   Updated: 2024/05/04 13:02:56 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/04 15:19:22 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,9 @@ void	*ft_routine(void *arg)
 		return (NULL);
 	while (get_current_time(philo->table) < 0)
 	{
-		//printf("BLOQUEANDO EATING_MUTEX!\nCURRENT_TIME -> %lld\n", get_current_time(philo->table));
 		pthread_mutex_lock(philo->eating_mutex);
 		philo->last_meal = get_current_time(philo->table);
 		pthread_mutex_unlock(philo->eating_mutex);
-		//printf("DESBLOQUEANDO EATING_MUTEX!\n");
 		usleep(20);
 	}
 	if (philo->id % 2 == 0)
@@ -59,6 +57,7 @@ void	*ft_routine(void *arg)
 		if (!ft_must_stop(philo->table))
 			ft_thinking(philo);
 	}
+	printf("FIN DE RUTINA DEL PHILO %d\n", philo->id);
 	return (NULL);
 }
 
@@ -114,7 +113,7 @@ void	ft_loop(t_table *table)
 			printf("BBBBBBBB %d\n", i);
 			break ;
 		}
-		usleep(100);
+		usleep(400);
 	}
 	return ;
 }

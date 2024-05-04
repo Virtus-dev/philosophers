@@ -6,7 +6,7 @@
 #    By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/27 13:27:47 by arigonza          #+#    #+#              #
-#    Updated: 2024/05/04 11:35:14 by arigonza         ###   ########.fr        #
+#    Updated: 2024/05/04 16:28:08 by arigonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME := philo
 
 CC := gcc
 
-CFLAGS := -Wall -Werror -Wextra -pthread
+CFLAGS := -Wall -Werror -Wextra -pthread -g
 
 EXTRA := -fsanitize=thread -g3
 

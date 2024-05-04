@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 14:01:40 by arigonza          #+#    #+#             */
-/*   Updated: 2024/05/04 12:41:51 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/04 15:18:44 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_must_stop(t_table *table)
 	pthread_mutex_lock(table->mutex_table);
 	if (table->finished == table->n_philosophers || table->died == 1)
 	{
-		printf("muerto\n");
+		//printf("MUST_STOP\n");
 		pthread_mutex_unlock(table->mutex_table);
 		return (1);
 	}

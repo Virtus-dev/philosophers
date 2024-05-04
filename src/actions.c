@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 20:32:40 by arigonza          #+#    #+#             */
-/*   Updated: 2024/05/04 12:58:05 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/04 14:31:59 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	*ft_eat(t_philosopher *philo)
 		pthread_mutex_unlock(philo->table->mutex_table);
 	}
 	while (!ft_must_stop(philo->table) && (get_current_time(philo->table)
-		< get_current_time(philo->table) + philo->table->time_to_eat))
+		< philo->last_meal + philo->table->time_to_eat))
 		usleep(1);
 	pthread_mutex_unlock(philo->r_fork);
 	pthread_mutex_unlock(philo->l_fork);
