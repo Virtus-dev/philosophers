@@ -6,7 +6,7 @@
 #    By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/27 13:27:47 by arigonza          #+#    #+#              #
-#    Updated: 2024/05/04 16:28:08 by arigonza         ###   ########.fr        #
+#    Updated: 2024/05/14 12:14:36 by arigonza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ all : $(NAME)
 
 $(NAME) : $(OBJ)
 	@echo "$(YELLOW)Compiling philosophers...$(DEF_COLOR)"
-	@$(CC) $(CFLAGS) $(EXTRA) -o $@ $^ -I includes/
+	@$(CC) $(CFLAGS) -o $@ $^ -I includes/
 	@echo "$(GREEN)$(NAME) compiled.$(DEF_COLOR)"
 
 $(OBJDIR) :

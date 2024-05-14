@@ -6,7 +6,7 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:20:21 by arigonza          #+#    #+#             */
-/*   Updated: 2024/05/04 15:19:22 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/14 12:08:08 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	*ft_routine(void *arg)
 		if (!ft_must_stop(philo->table))
 			ft_thinking(philo);
 	}
-	printf("FIN DE RUTINA DEL PHILO %d\n", philo->id);
 	return (NULL);
 }
 
@@ -86,8 +85,8 @@ void	ft_create_threads(t_philosopher *philos, t_table *table)
 			i++;
 		}
 	}
-	//usleep(200);
 	ft_loop(table);
+	usleep(200);
 	ft_free_all(table);
 }
 
@@ -102,15 +101,12 @@ void	ft_loop(t_table *table)
 		{
 			if (ft_is_dead(table->philosophers[i]))
 			{
-				printf("AaaAAAAAAAA\n");
 				break ;
 			}
 			i++;
 		}
 		if (ft_must_stop(table))
 		{
-			printf("died = %d\n", table->died);
-			printf("BBBBBBBB %d\n", i);
 			break ;
 		}
 		usleep(400);

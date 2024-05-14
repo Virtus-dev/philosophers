@@ -6,43 +6,13 @@
 /*   By: arigonza < arigonza@student.42malaga.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/28 16:36:54 by arigonza          #+#    #+#             */
-/*   Updated: 2024/05/04 13:13:55 by arigonza         ###   ########.fr       */
+/*   Updated: 2024/05/14 12:16:48 by arigonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-// t_philosopher	ft_create_philo(int id, t_table *table)
-// {
-// 	t_philosopher	philo;
-
-// 	philo.id = id;
-// 	philo.eating_mutex = malloc(sizeof(pthread_mutex_t));
-// 	if (!philo.eating_mutex)
-// 		ft_error(MUTEX_ERR);
-// 	if (pthread_mutex_init(philo.eating_mutex, NULL) != 0)
-// 		ft_error(MUTEX_ERR);
-// 	philo.times_eaten = 0;
-// 	philo.table = table;
-// 	philo.last_meal = 0;
-// 	return (philo);
-// }
-
-// t_philosopher	*ft_init_philos(int n, t_table *table)
-// {
-// 	int				i;
-// 	t_philosopher	*philos;
-
-// 	i = 0;
-// 	philos = (t_philosopher *)malloc(sizeof(t_philosopher) * n);
-// 	while (i < n)
-// 	{
-// 		philos[i] = ft_create_philo((i + 1), table);
-// 		i++;
-// 	}
-// 	return (philos);
-// }
-
+/*
 void	print_philos(t_table *table)
 {
 	int	i;
@@ -62,6 +32,7 @@ void	print_philos(t_table *table)
 		i++;
 	}
 }
+*/
 
 void	ft_init_philosophers(t_philosopher *philo, t_table *table)
 {
